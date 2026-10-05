@@ -1,0 +1,53 @@
+plugins {
+    id 'groovy'
+}
+
+group = 'com.kousenit'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('org.apache.groovy:groovy-bom:6.0.0')
+    implementation 'org.apache.groovy:groovy'
+    implementation 'org.apache.groovy:groovy-json'
+
+    testImplementation platform('org.spockframework:spock-bom:2.4-groovy-5.0')
+    testImplementation 'org.spockframework:spock-core'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging { events 'passed', 'failed', 'skipped' }
+}
+
+// One task per demo script: ./gradlew step1Trick, ./gradlew step3Types, ...
+fileTree('src/main/groovy/demos').matching { include '*.groovy' }.each { File script ->
+    String name = script.name - '.groovy'
+    tasks.register(name.uncapitalize(), JavaExec) {
+        group = 'demo'
+        description = "Run demos/${script.name}"
+        mainClass = "demos.$name"
+        classpath = sourceSets.main.runtimeClasspath
+        workingDir = projectDir            // so recordings/ resolves the same way everywhere
+        environment 'OPENROUTER_API_KEY', System.getenv('OPENROUTER_API_KEY') ?: ''
+        environment 'AI_MODEL', System.getenv('AI_MODEL') ?: ''
+        environment 'AI_LIVE', System.getenv('AI_LIVE') ?: ''
+    }
+}
+
+// Spock has no Groovy 6 build yet; run its Groovy 5 build and skip its version check.
+// The check runs in Spock's AST transform, so the compiler JVM needs the flag too.
+tasks.withType(GroovyCompile).configureEach {
+    groovyOptions.forkOptions.jvmArgs += ['-Dspock.iKnowWhatImDoing.disableGroovyVersionCheck=true']
+}
+test.systemProperty 'spock.iKnowWhatImDoing.disableGroovyVersionCheck', 'true'
