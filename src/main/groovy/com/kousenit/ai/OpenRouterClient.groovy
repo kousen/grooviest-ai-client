@@ -20,7 +20,7 @@ class OpenRouterClient {
     String model = System.getenv('AI_MODEL') ?: 'anthropic/claude-sonnet-5.5'
     String effort = 'low'          // reasoning effort; keeps live-demo latency down. null to omit.
     int maxTokens = 4096
-    File recordings = new File('recordings')
+    File recordings = new File(projectRoot(), 'recordings')
     boolean live = Boolean.parseBoolean(System.getenv('AI_LIVE'))
 
     private final HttpClient http = HttpClient.newHttpClient()
@@ -49,6 +49,14 @@ class OpenRouterClient {
         def reply = new JsonSlurper().parseText(response)
         if (reply.error) throw new IllegalStateException("OpenRouter error: ${reply.error.message}")
         reply.choices[0].message.content
+    }
+
+    /** Walk up from the working directory to the Gradle project root, so IDE run configs and
+     *  the groovy command find the same recordings whatever their working directory. */
+    static File projectRoot() {
+        File dir = new File(System.getProperty('user.dir')).absoluteFile
+        while (dir != null && !new File(dir, 'settings.gradle').exists()) dir = dir.parentFile
+        dir ?: new File('.').absoluteFile
     }
 
     File recordingFor(String requestJson) {

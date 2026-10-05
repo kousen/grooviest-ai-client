@@ -75,14 +75,14 @@ Hello'''
         Map sentSchema = null
         def ai = new AI({ String prompt, Map schema = null ->
             sentSchema = schema
-            JsonOutput.toJson(result: [name: 'Ken', age: 60, birthday: '1962-04-09'])
+            JsonOutput.toJson(result: [name: 'Ken', age: 60, birthday: '1962-03-12'])
         })
 
         when:
-        def person = ai.extractPerson('Ken Kousen, 60, born April 9 1962') as Person
+        def person = ai.extractPerson('Ken Kousen, 60, born March 12 1962') as Person
 
         then:
-        person == new Person('Ken', 60, LocalDate.of(1962, 4, 9))
+        person == new Person('Ken', 60, LocalDate.of(1962, 3, 12))
         sentSchema.get('properties').result == [
             type                : 'object',
             properties          : [name: [type: 'string'], age: [type: 'integer'],

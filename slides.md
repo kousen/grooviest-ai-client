@@ -389,7 +389,7 @@ int count        = ai.countTheNumberOfDistinctCities(bio) as int
 
 ```text
 Dates: [MONDAY, MONDAY, TUESDAY]
-Record: Person[name=Ken Kousen, role=President of Kousen IT, Inc., birthday=1962-04-09]
+Record: Person[name=Ken Kousen, role=President of Kousen IT, Inc., birthday=1962-03-12]
 Age at the talk: 64
 Mood: NEGATIVE
 Cities: 1
@@ -622,14 +622,14 @@ def "coercing to a type asks for JSON matching that type"() {
     Map sentSchema = null
     def ai = new AI({ String prompt, Map schema = null ->
         sentSchema = schema
-        JsonOutput.toJson(result: [name: 'Ken', age: 60, birthday: '1962-04-09'])
+        JsonOutput.toJson(result: [name: 'Ken', age: 60, birthday: '1962-03-12'])
     })
 
     when:
-    def person = ai.extractPerson('Ken Kousen, 60, born April 9 1962') as Person
+    def person = ai.extractPerson('Ken Kousen, 60, born March 12 1962') as Person
 
     then:
-    person == new Person('Ken', 60, LocalDate.of(1962, 4, 9))
+    person == new Person('Ken', 60, LocalDate.of(1962, 3, 12))
     sentSchema.get('properties').result.required == ['name', 'age', 'birthday']
 }
 ```
