@@ -14,7 +14,7 @@ enum Sentiment { POSITIVE, NEGATIVE, NEUTRAL }
 
 def ai = new AI()
 
-def bio = '''Ken Kousen, President of Kousen IT, Inc., was born on April 9, 1962.
+def bio = '''Ken Kousen, President of Kousen IT, Inc., was born on March 12, 1962.
 He speaks at Community Over Code in Glasgow on 12 October 2026, and again at
 the Grails tutorial that afternoon at 14:20. His book deadline is 1 December 2026.'''
 

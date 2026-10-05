@@ -79,12 +79,18 @@ The core trick takes two minutes. The other 38 are about what happens when you k
 # The Road Ahead
 
 ```mermaid {scale: 0.8}
-flowchart LR
-    A["1. The trick<br/>methodMissing"] --> B["2. Options<br/>named args"]
-    B --> C["3. Return types<br/>asType + JSON Schema"]
-    C --> D["4. String names<br/>ai.&quot;translate to $lang&quot;()"]
-    D --> E["5. Learning<br/>ExpandoMetaClass"]
-    E --> F["6. Closing<br/>propertyMissing"]
+flowchart TB
+    subgraph top [" "]
+        direction LR
+        A["1. The trick<br/>methodMissing"] --> B["2. Options<br/>named args"] --> C["3. Return types<br/>asType + JSON Schema"]
+    end
+    subgraph bottom [" "]
+        direction LR
+        D["4. String names<br/>ai.&quot;translate to $lang&quot;()"] --> E["5. Learning<br/>ExpandoMetaClass"] --> F["6. Closing<br/>propertyMissing"]
+    end
+    top --> bottom
+    style top fill:none,stroke:none
+    style bottom fill:none,stroke:none
 ```
 
 <v-clicks>
