@@ -668,7 +668,8 @@ ai.translate_to_french("Groovy makes the JVM fun again.")
 
 - `__getattr__` is called only when normal lookup fails. Same role as `methodMissing`
 - Keyword arguments map directly to our named-argument requirements
-- Ruby has `method_missing`, Smalltalk had `doesNotUnderstand:` in 1980
+- Ruby has `method_missing`, Smalltalk had `doesNotUnderstand:` in 1980, CLOS has `no-applicable-method`
+- The phrase "metaobject protocol" is Lisp's, from Kiczales et al., *The Art of the Metaobject Protocol*, 1991
 - Groovy's twist is `asType`: the coercion target drives the schema
 
 </v-clicks>
