@@ -27,6 +27,7 @@ from the type (records, arrays, enums, scalars, `LocalDate`).
 | `.../OpenRouterClient.groovy` | JDK `HttpClient` call to OpenRouter's chat completions API, with recording and replay |
 | `src/main/groovy/demos/Step1..6*.groovy` | the talk's progression, one script per beat |
 | `recordings/` | recorded API responses, keyed by request hash. Commit these. |
+| `slides.md` | the Slidev deck |
 
 ## Running
 
@@ -50,4 +51,12 @@ The scripts also run straight from the `groovy` command once the classes are bui
 
 ```bash
 ./gradlew classes && groovy -cp build/classes/groovy/main src/main/groovy/demos/Step4Strings.groovy
+```
+
+## Slides
+
+```bash
+npm install
+npm run dev        # live preview with hot reload
+npm run export     # PDF via Playwright
 ```
