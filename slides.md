@@ -22,7 +22,7 @@ slidev:
 
 <div class="pt-8">
   <span class="text-2xl opacity-85">
-    When <code>methodMissing</code> Meets Large Language Models
+    When <span class="font-mono">methodMissing</span> Meets Large Language Models
   </span>
 </div>
 
