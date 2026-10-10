@@ -1,6 +1,7 @@
 {
   "name": "grooviest-ai-client-slides",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "slidev slides.md --open",
     "build": "slidev build slides.md",
