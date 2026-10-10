@@ -69,8 +69,8 @@ class OpenRouterClient {
             throw new IllegalStateException('Set OPENROUTER_API_KEY, or run a demo that has a recording')
         }
         def request = HttpRequest.newBuilder('https://openrouter.ai/api/v1/chat/completions'.toURI())
-            .header('content-type', 'application/json')
-            .header('authorization', "Bearer $apiKey")
+            .header('Content-Type', 'application/json')
+            .header('Authorization', "Bearer $apiKey")
             .POST(HttpRequest.BodyPublishers.ofString(json))
             .build()
         def response = http.send(request, HttpResponse.BodyHandlers.ofString())
