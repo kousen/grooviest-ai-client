@@ -50,6 +50,27 @@ Kousen IT, Inc.
 
 ---
 
+# The Book
+
+<div class="grid grid-cols-2 gap-8 mt-4 items-center">
+  <div class="flex justify-center">
+    <img src="/claude-code-up-and-running.png" alt="Cover of Claude Code: Up and Running" class="h-100 shadow-lg" />
+  </div>
+  <div>
+
+### Claude Code: Up and Running
+*Harness the Power of Agentic Coding*
+
+Ken Kousen · O'Reilly Media
+
+On the O'Reilly learning platform:
+https://learning.oreilly.com/library/view/claude-code-up/0642572388782/
+
+  </div>
+</div>
+
+---
+
 # The Premise
 
 > What if any method name became an AI prompt?
