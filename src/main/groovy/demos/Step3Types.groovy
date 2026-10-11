@@ -15,23 +15,27 @@ enum Sentiment { POSITIVE, NEGATIVE, NEUTRAL }
 def ai = new AI()
 
 def bio = '''Ken Kousen, President of Kousen IT, Inc., was born on March 12, 1962.
-He speaks at Community Over Code in Glasgow on 12 October 2026, and again at
-the Grails tutorial that afternoon at 14:20. His book deadline is 1 December 2026.'''
+He is speaking at the Community Over Code conference in Glasgow, Scotland on 12 October 2026.
+He is giving a Groovy metaprogramming talk at 10:00 and a Grails tutorial at 14:20, 
+both in Tweed (the room, not the fabric).
 
-LocalDate[] dates = ai.extractDates(bio) as LocalDate[]
+The final text of his latest book, "Claude Code: Up and Running", was just submitted to 
+O'Reilly Media and should be available soon.'''
+
+def dates = ai.extractDates(bio) as LocalDate[]
 println "Dates: ${dates*.dayOfWeek}"
 println "Earliest: ${dates.min()}"
 println()
 
-Person ken = ai.extractPerson(bio) as Person
+def ken = ai.extractPerson(bio) as Person
 println "Record: $ken"
 println "Age at the talk: ${ken.birthday().until(LocalDate.of(2026, 10, 12)).years}"
 println()
 
-Sentiment mood = ai.classifySentiment('Conference wifi failed during my demo again.') as Sentiment
+def mood = ai.classifySentiment('Conference wifi failed during my demo again.') as Sentiment
 println "Mood: $mood"
 
-int count = ai.countTheNumberOfDistinctCities(bio) as int
+def count = ai.countTheNumberOfDistinctCities(bio) as int
 println "Cities: $count"
 println()
 
