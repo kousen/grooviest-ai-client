@@ -10,7 +10,9 @@ def ai = new AI()
 
 println ai.haiku
 println()
+
 println ai."a toast to the Groovy community, in one sentence"
 println()
+
 println "ai.respondsTo('anything') -> ${ai.respondsTo('anything') as boolean}"
 println ai.anything
