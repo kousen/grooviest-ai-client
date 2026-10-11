@@ -496,6 +496,8 @@ Just knock down the door,
 And invent it yourself, don't you know!"
 ```
 
+<audio controls src="/gaelic-future.mp3" class="mt-2 h-8"></audio>
+
 <v-click>
 
 <div class="pt-6 opacity-80">
