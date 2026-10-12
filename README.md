@@ -24,7 +24,8 @@ from the type (records, arrays, enums, scalars, `LocalDate`).
 | `src/main/groovy/com/kousenit/ai/AI.groovy` | `methodMissing`, `propertyMissing`, camelCase to instruction |
 | `.../Prompt.groovy` | the pending question: `toString()` and `asType(Class)` |
 | `.../Schemas.groovy` | JSON Schema from a type, and parsed JSON back into the type |
-| `.../OpenRouterClient.groovy` | JDK `HttpClient` call to OpenRouter's chat completions API, with recording and replay |
+| `.../OpenRouterApi.groovy` | OpenRouter's chat completions endpoint as a Groovy 6 `@HttpBuilderClient` interface |
+| `.../OpenRouterClient.groovy` | Builds the request body, calls the API, records and replays responses |
 | `src/main/groovy/demos/Step1..6*.groovy` | the talk's progression, one script per beat |
 | `recordings/` | recorded API responses, keyed by request hash. Commit these. |
 | `slides.md` | the Slidev deck |

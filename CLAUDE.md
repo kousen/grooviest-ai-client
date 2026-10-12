@@ -9,7 +9,8 @@ The talk arc lives in `TALK_PLAN.md`. Read it before changing the demos.
   build yet, so `build.gradle` sets `spock.iKnowWhatImDoing.disableGroovyVersionCheck` for both the
   Groovy compiler fork and the test JVM. Spock warns that this is unsupported; only the specs depend on it.
   Drop the flag when a `groovy-6.0` Spock variant appears on Maven Central.
-- OpenRouter chat completions API over plain JDK `HttpClient` + `groovy-json`. No SDK, so the magic is
+- OpenRouter chat completions API via Groovy 6's `@HttpBuilderClient` (incubating `groovy-http-builder`
+  module) + `groovy-json`. No vendor SDK, so the magic is
   clearly Groovy and the HTTP layer fits on one slide. OpenRouter rather than a vendor key because Ken
   keeps `OPENROUTER_API_KEY` in his shell and it reaches any model. Default `anthropic/claude-sonnet-5.5`,
   override with `AI_MODEL`; reasoning effort `low` for demo latency.

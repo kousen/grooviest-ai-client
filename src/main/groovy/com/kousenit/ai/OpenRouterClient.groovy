@@ -3,14 +3,12 @@ package com.kousenit.ai
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 import java.security.MessageDigest
 
 /**
- * Thin client for OpenRouter's chat completions API: plain JDK HttpClient plus groovy-json.
- * Any model OpenRouter serves works; set AI_MODEL to switch without touching code.
+ * Thin client for OpenRouter's chat completions API: a Groovy 6 {@code @HttpBuilderClient}
+ * interface plus groovy-json. Any model OpenRouter serves works; set AI_MODEL to switch
+ * without touching code.
  *
  * Every response is recorded under {@link #recordings}, keyed by a hash of the request body.
  * A request that matches a recording is answered from disk, so the demos survive conference
@@ -23,7 +21,14 @@ class OpenRouterClient {
     File recordings = new File(projectRoot(), 'recordings')
     boolean live = Boolean.parseBoolean(System.getenv('AI_LIVE'))
 
-    private final HttpClient http = HttpClient.newHttpClient()
+    @Lazy private OpenRouterApi api = {
+        String apiKey = System.getenv('OPENROUTER_API_KEY')
+        if (!apiKey) throw new IllegalStateException('Set OPENROUTER_API_KEY, or run a demo that has a recording')
+        OpenRouterApi.create {
+            baseUri OpenRouterApi.BASE_URI
+            header 'Authorization', "Bearer $apiKey"
+        }
+    }()
 
     /** The request body. Public so tests can check the shape without touching the network. */
     Map request(String prompt, Map schema = null) {
@@ -40,9 +45,9 @@ class OpenRouterClient {
 
     /** Text of the reply. When a schema is given, that text is JSON matching the schema. */
     String complete(String prompt, Map schema = null) {
-        String json = JsonOutput.toJson(request(prompt, schema))
-        File recording = recordingFor(json)
-        String response = (!live && recording.exists()) ? recording.text : send(json)
+        Map body = request(prompt, schema)
+        File recording = recordingFor(JsonOutput.toJson(body))
+        String response = (!live && recording.exists()) ? recording.text : api.chat(body)
         recordings.mkdirs()
         recording.text = response
 
@@ -61,23 +66,6 @@ class OpenRouterClient {
 
     File recordingFor(String requestJson) {
         new File(recordings, "${sha256(requestJson)}.json")
-    }
-
-    private String send(String json) {
-        String apiKey = System.getenv('OPENROUTER_API_KEY')
-        if (!apiKey) {
-            throw new IllegalStateException('Set OPENROUTER_API_KEY, or run a demo that has a recording')
-        }
-        def request = HttpRequest.newBuilder('https://openrouter.ai/api/v1/chat/completions'.toURI())
-            .header('Content-Type', 'application/json')
-            .header('Authorization', "Bearer $apiKey")
-            .POST(HttpRequest.BodyPublishers.ofString(json))
-            .build()
-        def response = http.send(request, HttpResponse.BodyHandlers.ofString())
-        if (response.statusCode() != 200) {
-            throw new IllegalStateException("HTTP ${response.statusCode()}: ${response.body()}")
-        }
-        response.body()
     }
 
     private static String sha256(String s) {

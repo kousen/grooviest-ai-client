@@ -13,6 +13,7 @@ dependencies {
     implementation platform('org.apache.groovy:groovy-bom:6.0.0')
     implementation 'org.apache.groovy:groovy'
     implementation 'org.apache.groovy:groovy-json'
+    implementation 'org.apache.groovy:groovy-http-builder'   // Groovy 6: @HttpBuilderClient
 
     testImplementation platform('org.spockframework:spock-bom:2.4-groovy-5.0')
     testImplementation 'org.spockframework:spock-core'

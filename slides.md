@@ -591,24 +591,26 @@ layout: section
 # The HTTP Layer Fits on One Slide
 
 ```groovy
-Map request(String prompt, Map schema = null) {
-    Map body = [
-        model     : model,
-        max_tokens: maxTokens,
-        messages  : [[role: 'user', content: prompt]],
-        provider  : [require_parameters: true]
-    ]
-    if (schema) body.response_format = [type: 'json_schema',
-                                        json_schema: [name: 'result', strict: true, schema: schema]]
-    body
+@HttpBuilderClient(OpenRouterApi.BASE_URI)
+interface OpenRouterApi {
+    String BASE_URI = 'https://openrouter.ai/api/v1/'
+
+    @Post('chat/completions')
+    String chat(@Body Map body)        // raw JSON back, so we can record it
+}
+
+OpenRouterApi.create {
+    baseUri OpenRouterApi.BASE_URI
+    header 'Authorization', "Bearer $apiKey"
 }
 ```
 
 <v-clicks>
 
-- JDK `HttpClient` and `groovy-json`. No SDK
+- Groovy 6's `groovy-http-builder`: an AST transform writes the implementation
+- `@Body Map` goes out as JSON. A `String` return type means the raw body
+- `create { }` carries the runtime token, like configuring a Spring `RestClient` bean
 - OpenRouter, so the same code talks to Claude, GPT, or anything else via `AI_MODEL`
-- The magic is clearly Groovy, not a framework
 
 </v-clicks>
 
