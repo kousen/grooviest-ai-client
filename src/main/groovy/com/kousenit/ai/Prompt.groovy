@@ -1,5 +1,6 @@
 package com.kousenit.ai
 
+import groovy.concurrent.Awaitable
 import groovy.json.JsonSlurper
 
 /**
@@ -32,6 +33,12 @@ class Prompt {
         if (type == String) return toString()
         String json = backend(render(), Schemas.wrap(Schemas.of(type)))
         Schemas.coerce(new JsonSlurper().parseText(json).result, type)
+    }
+
+    /** Ask now, on a virtual thread, and collect the text later with {@code await}.
+     *  Several prompts can be in flight at once: {@code await(a.async(), b.async())}. */
+    Awaitable<String> async() {
+        async { toString() }
     }
 
     /** The prompt text that will be sent. */

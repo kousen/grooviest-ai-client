@@ -104,4 +104,22 @@ Hello'''
         (ai.extractDates('text') as LocalDate[]) == [LocalDate.of(2026, 10, 12), LocalDate.of(2026, 10, 14)] as LocalDate[]
         (ai.classifySentiment('text') as Sentiment) == Sentiment.POSITIVE
     }
+
+    def "prompts can be asked concurrently and awaited together"() {
+        given:
+        def threads = Collections.synchronizedSet([] as Set)
+        def ai = new AI({ String prompt, Map schema = null ->
+            threads << Thread.currentThread()
+            Thread.sleep(100)
+            prompt.readLines()[0]
+        })
+
+        when:
+        def replies = await(ai.translateToFrench('x').async(), ai.translateToSpanish('x').async())
+
+        then:
+        replies == ['Translate to french.', 'Translate to spanish.']
+        threads.size() == 2
+        threads.every { it.virtual }
+    }
 }

@@ -30,6 +30,8 @@ println()
 def ken = ai.extractPerson(bio) as Person
 println "Record: $ken"
 println "Age at the talk: ${ken.birthday().until(LocalDate.of(2026, 10, 12)).years}"
+val (name: who, birthday: born) = ken              // Groovy 6: destructure by property name
+println "Destructured: $who, born $born"
 println()
 
 def mood = ai.classifySentiment('Conference wifi failed during my demo again.') as Sentiment

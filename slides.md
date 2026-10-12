@@ -402,6 +402,7 @@ enum Sentiment { POSITIVE, NEGATIVE, NEUTRAL }
 
 LocalDate[] dates = ai.extractDates(bio) as LocalDate[]
 Person ken       = ai.extractPerson(bio) as Person
+val (name: who, birthday: born) = ken              // Groovy 6 destructuring
 Sentiment mood   = ai.classifySentiment('Conference wifi failed again.') as Sentiment
 int count        = ai.countTheNumberOfDistinctCities(bio) as int
 ```
@@ -412,6 +413,7 @@ int count        = ai.countTheNumberOfDistinctCities(bio) as int
 Dates: [MONDAY, MONDAY, TUESDAY]
 Record: Person[name=Ken Kousen, role=President of Kousen IT, Inc., birthday=1962-03-12]
 Age at the talk: 64
+Destructured: Ken Kousen, born 1962-03-12
 Mood: NEGATIVE
 Cities: 1
 ```
@@ -449,6 +451,7 @@ println dates*.getClass()*.simpleName
 - The best schema we can ask for is an array of strings
 - Arrays keep their component type: `LocalDate[].componentType == LocalDate`
 - **Prefer `as LocalDate[]`** when you want typed elements back
+- Groovy 6 adds `@ClassTag`: under `@CompileStatic` the compiler supplies the `Class` token itself. Dynamic code still passes it
 
 </v-clicks>
 
@@ -482,6 +485,24 @@ println ai."rewrite as a limerick about Glasgow"(line)
 
 ---
 
+# Two Prompts in Flight
+
+```groovy
+def (french, spanish) = await(ai."translate to French"(line).async(),
+                              ai."translate to Spanish"(line).async())
+```
+
+<v-clicks>
+
+- Groovy 6 `async`/`await`: contextual keywords, virtual threads on JDK 21+
+- `Prompt.async()` is one line: `async { toString() }`. The lazy prompt is forced on a worker thread
+- `await(a, b)` waits for all. Exceptions arrive unwrapped, as themselves
+- `async { ai.translateToFrench(line) }` would only hand back an unsent `Prompt`. Force it inside
+
+</v-clicks>
+
+---
+
 # Demo 4: Output
 
 ```text
@@ -494,6 +515,9 @@ Said, "Waiting won't help futures grow.
 Don't guess what's in store,
 Just knock down the door,
 And invent it yourself, don't you know!"
+
+La meilleure façon de prédire l'avenir est de l'inventer.
+La mejor manera de predecir el futuro es inventarlo.
 ```
 
 <audio controls src="/gaelic-future.mp3" class="mt-2 h-8"></audio>

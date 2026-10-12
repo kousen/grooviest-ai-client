@@ -18,3 +18,10 @@ println ai."translate to $language"(line)
 println()
 
 println ai."rewrite as a limerick about Glasgow"(line)
+println()
+
+// Groovy 6 async/await: both translations in flight at once, on virtual threads.
+def (french, spanish) = await(ai."translate to French"(line).async(),
+                              ai."translate to Spanish"(line).async())
+println french
+println spanish
