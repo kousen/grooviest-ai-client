@@ -10,10 +10,11 @@ The talk arc lives in `TALK_PLAN.md`. Read it before changing the demos.
   Groovy compiler fork and the test JVM. Spock warns that this is unsupported; only the specs depend on it.
   Drop the flag when a `groovy-6.0` Spock variant appears on Maven Central.
 - OpenRouter chat completions API via Groovy 6's `@HttpBuilderClient` (incubating `groovy-http-builder`
-  module) + `groovy-json`. No vendor SDK, so the magic is
-  clearly Groovy and the HTTP layer fits on one slide. OpenRouter rather than a vendor key because Ken
-  keeps `OPENROUTER_API_KEY` in his shell and it reaches any model. Default `anthropic/claude-sonnet-5.5`,
-  override with `AI_MODEL`; reasoning effort `low` for demo latency.
+  module) + `groovy-json`. No vendor SDK, so the magic is clearly Groovy and the HTTP layer fits on
+  one slide. `create(Closure)` starts from a blank builder, so it restates `baseUri`; the base URI
+  needs its trailing slash or a leading-slash path replaces `/api/v1`. OpenRouter rather than a
+  vendor key because Ken keeps `OPENROUTER_API_KEY` in his shell and it reaches any model. Default
+  `anthropic/claude-sonnet-5.5`, override with `AI_MODEL`; reasoning effort `low` for demo latency.
 - `AI` takes a `Closure<String> backend` `(prompt, schema = null) -> reply`. Tests pass a closure;
   production uses `new OpenRouterClient().&complete`. No interface.
 - `methodMissing` returns a lazy `Prompt`. `toString()` = text, `asType(Class)` = structured output.
