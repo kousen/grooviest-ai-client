@@ -15,7 +15,7 @@ runtime how to answer a method it never declared.'''
 println ai.summarize(text)
 println()
 
-println ai.translateToFrench('Groovy makes the JVM fun again.')
+println ai.translateToSpanish('Groovy makes the JVM fun again.')
 println()
 
 println ai.explainLikeImFive('What is metaprogramming?')

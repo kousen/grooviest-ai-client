@@ -43,4 +43,4 @@ println()
 
 // Teaching moment: generics are erased, so `as List<LocalDate>` is just `as List`.
 // The schema can only ask for an array of strings. Arrays keep their component type.
-println "as List<LocalDate> gives: ${(ai.extractDates(bio) as List<LocalDate>)*.getClass()*.simpleName}"
+println "as List<LocalDate> gives: ${(ai.extractDates(bio) as List<LocalDate>)}"

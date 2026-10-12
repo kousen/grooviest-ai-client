@@ -187,7 +187,7 @@ class AI {
 def ai = new AI()
 
 println ai.summarize(text)
-println ai.translateToFrench('Groovy makes the JVM fun again.')
+println ai.translateToSpanish('Groovy makes the JVM fun again.')
 println ai.explainLikeImFive('What is metaprogramming?')
 ```
 
@@ -197,7 +197,7 @@ println ai.explainLikeImFive('What is metaprogramming?')
 Apache Groovy is a JVM language with dynamic typing (and optional static typing)
 that compiles to Java bytecode and works with any Java library. ...
 
-Groovy redonne du plaisir à la JVM.
+Groovy hace que la JVM vuelva a ser divertida.
 
 Imagine you have a box of LEGOs, and you build things by following instructions.
 Now imagine you could build a little robot that builds LEGO things for you...
@@ -434,13 +434,13 @@ This is where it stops being a toy. The compiler knows the types, the tests know
 
 ```groovy
 def dates = ai.extractDates(bio) as List<LocalDate>
-println dates*.getClass()*.simpleName
+println dates
 ```
 
 <v-click>
 
 ```text
-[String, String, String]
+[March 12, 1962, 12 October 2026]
 ```
 
 </v-click>
@@ -448,7 +448,7 @@ println dates*.getClass()*.simpleName
 <v-clicks>
 
 - `as List<LocalDate>` compiles to `asType(List)`. The element type is gone
-- The best schema we can ask for is an array of strings
+- The best schema we can ask for is an array of strings, so those are Strings in whatever format the model chose
 - Arrays keep their component type: `LocalDate[].componentType == LocalDate`
 - **Prefer `as LocalDate[]`** when you want typed elements back
 - Groovy 6 adds `@ClassTag`: under `@CompileStatic` the compiler supplies the `Class` token itself. Dynamic code still passes it
@@ -573,16 +573,15 @@ Groovy closures retain access to the variables in the scope where they were
 defined, and they support currying, composition, and memoization.
 
 Responds to summarize now? true
-(11.0 ms)
-Groovy closures retain access to the variables ...
-(0.2 ms)
-Groovy closures retain access to the variables ...
+Groovy closures retain access to the variables ... (6 ms)
+Groovy closures retain access to the variables ... (0 ms)
 ```
 
 <v-clicks>
 
 - Live, the first call is a network round trip measured in seconds
 - Those numbers came from the offline replay, which is why both are small
+- Timing is `System.timed { ... }`, new in Groovy 6: a `Timed` record with `result` and `millis`
 
 </v-clicks>
 

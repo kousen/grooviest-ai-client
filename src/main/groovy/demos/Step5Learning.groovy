@@ -20,11 +20,8 @@ ai.metaClass.summarize = { String s ->
 
 println "Responds to summarize now? ${ai.respondsTo('summarize') as boolean}"
 
-def timed = { Closure c ->
-    long t = System.nanoTime()
-    def r = c()
-    println "(${(System.nanoTime() - t) / 1_000_000} ms)"
-    r
+// Groovy 6: System.timed returns a Timed<T> record (result + duration), so no stopwatch closure.
+2.times {
+    val run = System.timed { ai.summarize(text) }
+    println "$run.result ($run.millis ms)"
 }
-println timed { ai.summarize(text) }
-println timed { ai.summarize(text) }
