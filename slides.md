@@ -517,6 +517,7 @@ layout: section
 # ExpandoMetaClass: Teach It a Real Method
 
 ```groovy
+val ai = new AI()                                 // Groovy 6: a final binding
 println ai.respondsTo('summarize') as boolean    // false
 println ai.summarize(text)                        // via methodMissing
 
@@ -534,6 +535,7 @@ println ai.summarize(text)                        // real method, memoized
 - A pinned method takes precedence over `methodMissing`
 - `respondsTo` flips from false to true: the object has **learned**
 - `.memoize()` means a repeated question never leaves the JVM
+- `val` is final, yet the object behind it changed. Finality is shallow; learning is not
 
 </v-clicks>
 

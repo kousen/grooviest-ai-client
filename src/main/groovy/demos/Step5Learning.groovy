@@ -6,7 +6,7 @@ import com.kousenit.ai.AI
 // Then we pin a real, memoized method onto the metaclass. respondsTo flips from false
 // to true, and repeated calls with the same material never leave the JVM.
 
-def ai = new AI()
+val ai = new AI()        // the binding is final; the object still learns
 def text = 'Groovy closures capture their lexical scope and can be curried, composed, and memoized.'
 
 println "Responds to summarize? ${ai.respondsTo('summarize') as boolean}"
