@@ -687,7 +687,7 @@ def "coercing to a type asks for JSON matching that type"() {
 <v-clicks>
 
 - The backend is a closure, so the spec **is** the backend
-- Spock 2.4 for Groovy 5, running on Groovy 6 with the version check disabled
+- Spock 2.5, the first release built against Groovy 6
 - Note `sentSchema.get('properties')`. More on that in a moment
 
 </v-clicks>

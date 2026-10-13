@@ -5,10 +5,9 @@ The talk arc lives in `TALK_PLAN.md`. Read it before changing the demos.
 
 ## Decisions
 
-- Groovy 6.0.0 (released 19 Sep 2026), JDK 25, Gradle 9.8, Spock `2.4-groovy-5.0`. Spock has no Groovy 6
-  build yet, so `build.gradle` sets `spock.iKnowWhatImDoing.disableGroovyVersionCheck` for both the
-  Groovy compiler fork and the test JVM. Spock warns that this is unsupported; only the specs depend on it.
-  Drop the flag when a `groovy-6.0` Spock variant appears on Maven Central.
+- Groovy 6.0.0 (released 19 Sep 2026), JDK 25, Gradle 9.8, Spock `2.5-groovy-6.0` (published 6 Oct 2026,
+  the first Spock built against Groovy 6). Earlier commits ran `2.4-groovy-5.0` with
+  `spock.iKnowWhatImDoing.disableGroovyVersionCheck`; that flag is gone.
 - OpenRouter chat completions API via Groovy 6's `@HttpBuilderClient` (incubating `groovy-http-builder`
   module) + `groovy-json`. No vendor SDK, so the magic is clearly Groovy and the HTTP layer fits on
   one slide. `create(Closure)` starts from a blank builder, so it restates `baseUri`; the base URI
