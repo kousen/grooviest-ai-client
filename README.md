@@ -61,3 +61,8 @@ npm install
 npm run dev        # live preview with hot reload
 npm run export     # PDF via Playwright
 ```
+
+No setup needed to just read it:
+
+- **Web version** (GitHub Pages): **<https://kousen.github.io/grooviest-ai-client/>** via [`deploy-slides-pages.yml`](.github/workflows/deploy-slides-pages.yml)
+- **PDF**: [`grooviest-ai-client-slides.pdf`](https://github.com/kousen/grooviest-ai-client/releases/latest/download/grooviest-ai-client-slides.pdf) from the rolling `slides-latest` release
